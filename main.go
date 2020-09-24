@@ -66,10 +66,11 @@ func main() {
 		fmt.Println(t.Name)
 		for _, s := range t.Steps {
 			client := plugin.NewClient(&plugin.ClientConfig{
-				HandshakeConfig: handshakeConfig,
-				Plugins:         pluginMap,
-				Cmd:             exec.Command("./pls/" + s.Name),
-				Logger:          logger,
+				HandshakeConfig:  handshakeConfig,
+				Plugins:          pluginMap,
+				Cmd:              exec.Command("./pls/" + s.Name),
+				Logger:           logger,
+				AllowedProtocols: []plugin.Protocol{plugin.ProtocolNetRPC, plugin.ProtocolGRPC},
 			})
 			defer client.Kill()
 
@@ -98,7 +99,7 @@ func main() {
 var handshakeConfig = plugin.HandshakeConfig{
 	ProtocolVersion:  1,
 	MagicCookieKey:   "BASIC_PLUGIN",
-	MagicCookieValue: "hello",
+	MagicCookieValue: "tyro",
 }
 
 var pluginMap = map[string]plugin.Plugin{

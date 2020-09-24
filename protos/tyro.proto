@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option go_package = "github.com/rumpl/tyro/protos";
+
+message RunRequest {
+    map<string, string> args = 1;
+}
+
+message RunResponse {
+}
+
+service Tyro {
+    rpc Run(RunRequest) returns (RunResponse);
+}

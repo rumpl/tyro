@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/hashicorp/go-hclog"
@@ -14,14 +15,16 @@ type Mod struct {
 
 func (g *Mod) Run(args map[string]string) error {
 	f := args["dir"]
-	os.Mkdir(f, 0755)
+	if err := os.Mkdir(f, 0755); err != nil {
+		return fmt.Errorf(err.Error())
+	}
 	return nil
 }
 
 var handshakeConfig = plugin.HandshakeConfig{
 	ProtocolVersion:  1,
 	MagicCookieKey:   "BASIC_PLUGIN",
-	MagicCookieValue: "hello",
+	MagicCookieValue: "tyro",
 }
 
 func main() {
@@ -44,5 +47,6 @@ func main() {
 	plugin.Serve(&plugin.ServeConfig{
 		HandshakeConfig: handshakeConfig,
 		Plugins:         pluginMap,
+		GRPCServer:      plugin.DefaultGRPCServer,
 	})
 }
