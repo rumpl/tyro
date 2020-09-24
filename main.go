@@ -78,19 +78,19 @@ func main() {
 				log.Fatal(err)
 			}
 
-			raw, err := rpcClient.Dispense("greeter")
+			raw, err := rpcClient.Dispense("tyro")
 			if err != nil {
 				log.Fatal(err)
 			}
 
-			greeter := raw.(tyroplugin.Greeter)
+			plug := raw.(tyroplugin.Plugin)
 			args := &map[string]string{}
 			diags := gohcl.DecodeBody(s.Properties, nil, args)
 			if diags.HasErrors() {
 				panic(diags)
 			}
 
-			fmt.Println(greeter.Run(*args))
+			fmt.Println(plug.Run(*args))
 		}
 	}
 }
@@ -102,5 +102,5 @@ var handshakeConfig = plugin.HandshakeConfig{
 }
 
 var pluginMap = map[string]plugin.Plugin{
-	"greeter": &tyroplugin.GreeterPlugin{},
+	"tyro": &tyroplugin.TyroPlugin{},
 }
