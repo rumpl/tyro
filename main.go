@@ -37,8 +37,7 @@ type Dir struct {
 
 func main() {
 	var conf Project
-	err := hclsimple.DecodeFile("./test.hcl", nil, &conf)
-	if err != nil {
+	if err := hclsimple.DecodeFile("./test.hcl", nil, &conf); err != nil {
 		log.Fatal(err)
 	}
 
@@ -59,7 +58,7 @@ func main() {
 	logger := hclog.New(&hclog.LoggerOptions{
 		Name:   "plugin",
 		Output: os.Stdout,
-		Level:  hclog.Trace,
+		Level:  hclog.Error,
 	})
 
 	for _, t := range conf.Targets {
